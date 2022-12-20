@@ -6,4 +6,4 @@ docker container create \
   -e POSTGRES_DB=sample \
   -e PGDATA=/var/lib/postgresql/data/pgdata \
   -p 127.0.0.1:5432:5432 \
-  postgres:latest
+  postgres:15.1
