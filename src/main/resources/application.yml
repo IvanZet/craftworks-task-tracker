@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    # FIXME: hide credentials
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: sample
+    password: sample
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      dll-auto: none
+      show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
