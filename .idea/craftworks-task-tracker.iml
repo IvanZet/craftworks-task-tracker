@@ -33,7 +33,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.13.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:2.7.7-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.70" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:9.0.70" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.70" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:5.3.24" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.3.24" level="project" />
@@ -95,6 +94,10 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:5.3.24" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.24" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:5.3.24" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-validation:2.7.7-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:9.0.70" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:6.2.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.postgresql:postgresql:42.3.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
   </component>

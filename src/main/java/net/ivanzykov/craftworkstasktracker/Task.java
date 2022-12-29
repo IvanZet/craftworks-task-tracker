@@ -3,6 +3,7 @@ package net.ivanzykov.craftworkstasktracker;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -16,6 +17,7 @@ public class Task {
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date createdAt;
 
     @Column(name = "updated_at")
@@ -24,16 +26,20 @@ public class Task {
 
     @Column(name = "due_date")
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date dueDate;
 
     @Column(name = "resolved_at")
     @Temporal(TemporalType.DATE)
     private Date resolvedAt;
 
+    @NotNull
     private String title;
     private String description;
-    private String priority;
-    private String status;
+    @NotNull
+    private String priority; // hi/md/lo
+    @NotNull
+    private String status; // wait/work/done
 
     protected Task() {}
 
@@ -60,7 +66,7 @@ public class Task {
         return createdAt;
     }
 
-    public void setCreatedAt(java.util.Date createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -68,7 +74,7 @@ public class Task {
         return updatedAt;
     }
 
-    public void setUpdatedAt(java.util.Date updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
