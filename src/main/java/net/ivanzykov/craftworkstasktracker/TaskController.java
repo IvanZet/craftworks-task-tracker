@@ -20,9 +20,8 @@ public class TaskController {
 
     @GetMapping("{id}")
     Task fetchSingle (@PathVariable Long id) {
-        // TODO: if not found, throw EmployeeNotFoundException like described in
-        // https://spring.io/guides/tutorials/rest/
-        return taskRepository.getReferenceById(id);
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     // FIXME: use DTO for task arg
