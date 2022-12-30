@@ -1,6 +1,8 @@
 package net.ivanzykov.craftworkstasktracker;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,11 +19,12 @@ public class Task {
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
+    @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date updatedAt;
 
     @Column(name = "due_date")
