@@ -26,10 +26,10 @@ public class TaskController {
     }
 
     @GetMapping("{id}")
-    // FIXME: use DTO
-    Task fetchSingle (@PathVariable Long id) {
-        return taskService.fetchSingle(id)
+    TaskDto fetchSingle (@PathVariable Long id) {
+        Task task = taskService.fetchSingle(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
+        return mapToDto(task);
     }
 
     // FIXME: use DTO for task arg
