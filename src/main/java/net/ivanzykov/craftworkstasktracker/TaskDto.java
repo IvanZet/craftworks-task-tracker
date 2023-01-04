@@ -5,7 +5,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents Task entity for external clients and converts time to client's time zone.
+ * Represents Task entity for external clients and converts time to client's or db's time zone.
  */
 public class TaskDto {
 
@@ -20,7 +20,6 @@ public class TaskDto {
     private String status;
 
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm zz");
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd zz");
     private ZoneId timezone;
 
     public TaskDto() {
@@ -108,36 +107,61 @@ public class TaskDto {
      * @param resolvedAt    offsetDateTime object when the task was done
      * @param timezone      zoneId object of the client's timezone
      */
-    public void setAllDatesToClientsTimeZone(OffsetDateTime createdAt, OffsetDateTime updatedAt, OffsetDateTime dueDate,
-                                             OffsetDateTime resolvedAt, ZoneId timezone) {
+    public void setAllDatesConverted(OffsetDateTime createdAt, OffsetDateTime updatedAt, OffsetDateTime dueDate,
+                                     OffsetDateTime resolvedAt, ZoneId timezone) {
         this.timezone = timezone;
-        setCreatedAtToClientsTimeZone(createdAt);
-        setUpdatedAtToClientsTimeZone(updatedAt);
-        setDueDateToClientsTimeZone(dueDate);
-        setResolvedAtToClientsTimeZone(resolvedAt);
+        setCreatedAtConverted(createdAt);
+        setUpdatedAtConverted(updatedAt);
+        setDueDateConverted(dueDate);
+        setResolvedAtConverted(resolvedAt);
     }
 
-    private void setCreatedAtToClientsTimeZone(OffsetDateTime createdAt) {
-        this.createdAt = createdAt.atZoneSameInstant(timezone)
-                .format(dateTimeFormatter);
+    /**
+     * Converts the date when the task was created to the client's time zone, formats it to string and updates the
+     * corresponding field of this object.
+     *
+     * @param createdAt offsetDateTime object the task was created
+     */
+    public void setCreatedAtConverted(OffsetDateTime createdAt) {
+        this.createdAt = convertAndFormatDate(createdAt);
     }
 
-    private void setUpdatedAtToClientsTimeZone(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt.atZoneSameInstant(timezone)
-                .format(dateTimeFormatter);
+    /**
+     * Converts the date when the task was last updated to the client's time zone, formats it to string and updates the
+     * corresponding field of this object.
+     *
+     * @param updatedAt offsetDateTime object the task was last updated
+     */
+    public void setUpdatedAtConverted(OffsetDateTime updatedAt) {
+        this.updatedAt = convertAndFormatDate(updatedAt);
     }
 
-    private void setDueDateToClientsTimeZone(OffsetDateTime dueDate) {
-        this.dueDate = dueDate.atZoneSameInstant(timezone)
-                .format(dateFormatter);
+    /**
+     * Converts the date when the task is expected to be done to the client's time zone, formats it to string and
+     * updates the corresponding field of this object
+     *
+     * @param dueDate   offsetDateTime object when the task is expected to be done
+     */
+    public void setDueDateConverted(OffsetDateTime dueDate) {
+        this.dueDate = convertAndFormatDate(dueDate);
     }
 
-    private void setResolvedAtToClientsTimeZone(OffsetDateTime resolvedAt) {
+    /**
+     * Converts the date when the task was done to the client's time zone, formats it to string and updates the
+     * corresponding field of this object.
+     *
+     * @param resolvedAt    offsetDateTime object when the task was done
+     */
+    public void setResolvedAtConverted(OffsetDateTime resolvedAt) {
         // resolvedAt allowed to be null
         if (resolvedAt != null) {
-            this.resolvedAt = resolvedAt.atZoneSameInstant(timezone)
-                    .format(dateFormatter);
+            this.resolvedAt = convertAndFormatDate(resolvedAt);
         }
+    }
+
+    private String convertAndFormatDate(OffsetDateTime date) {
+        return date.atZoneSameInstant(timezone)
+                .format(dateTimeFormatter);
     }
 
     // TODO: add methods returning dates converted to DB's time zone

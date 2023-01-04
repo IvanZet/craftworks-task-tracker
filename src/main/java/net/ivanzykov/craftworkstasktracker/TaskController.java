@@ -53,7 +53,7 @@ public class TaskController {
 
     private TaskDto mapToDto(Task task) {
         TaskDto taskDto = modelMapper.map(task, TaskDto.class);
-        taskDto.setAllDatesToClientsTimeZone(
+        taskDto.setAllDatesConverted(
                 task.getCreatedAt(),
                 task.getUpdatedAt(),
                 task.getDueDate(),
