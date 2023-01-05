@@ -44,7 +44,12 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     TaskDto createSingle(@RequestBody final TaskDto taskDto) {
         // TODO: check that required fields passed, otherwise return a 400 bad payload
-        Task task = mapToEntity(taskDto);
+        Task task;
+        try {
+            task = mapToEntity(taskDto);
+        } catch (DateTimeParseException ex) {
+            throw new TaskDateTimeParseException(ex.getMessage(), TaskDto.getDateTimeFormatter());
+        }
         Task taskCreated = taskService.createSingle(task);
         return mapToDto(taskCreated);
     }
