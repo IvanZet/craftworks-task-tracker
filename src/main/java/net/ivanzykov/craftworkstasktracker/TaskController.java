@@ -2,6 +2,7 @@ package net.ivanzykov.craftworkstasktracker;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,9 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @Value("${spring.jpa.properties.hibernate.jdbc.time_zone}")
+    private String timezoneOfDb;
+
     @GetMapping
     List<TaskDto> fetchAll() {
         List<Task> tasks = taskService.fetchAll();
@@ -33,12 +37,13 @@ public class TaskController {
         return mapToDto(task);
     }
 
-    // FIXME: use DTO for task arg
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    Task createSingle(@RequestBody final Task task) {
+    TaskDto createSingle(@RequestBody final TaskDto taskDto) {
         // TODO: check that required fields passed, otherwise return a 400 bad payload
-        return taskService.createSingle(task);
+        Task task = mapToEntity(taskDto);
+        Task taskCreated = taskService.createSingle(task);
+        return mapToDto(taskCreated);
     }
 
     // FIXME: use DTO for task arg
@@ -63,5 +68,15 @@ public class TaskController {
                 // TODO: try getting time zone from the request
                 ZoneId.of("CET"));
         return taskDto;
+    }
+
+    private Task mapToEntity(TaskDto taskDto) {
+        Task task = modelMapper.map(taskDto, Task.class);
+        ZoneId zoneIdOfDb = ZoneId.of(timezoneOfDb);
+        task.setCreatedAt(taskDto.getCreatedAtConverted(zoneIdOfDb));
+        task.setUpdatedAt(taskDto.getUpdatedAtConverted(zoneIdOfDb));
+        task.setDueDate(taskDto.getDueDateConverted(zoneIdOfDb));
+        task.setResolvedAt(taskDto.getResolvedAtConverted(zoneIdOfDb));
+        return task;
     }
 }
