@@ -20,7 +20,7 @@ public class TaskDto {
     private String priority;
     private String status;
 
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm zz");
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm zz");
     private ZoneId timezone;
 
     public TaskDto() {
@@ -97,6 +97,10 @@ public class TaskDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public static DateTimeFormatter getDateTimeFormatter() {
+        return dateTimeFormatter;
     }
 
     /**

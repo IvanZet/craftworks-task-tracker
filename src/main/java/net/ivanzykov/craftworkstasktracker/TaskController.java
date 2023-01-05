@@ -1,13 +1,15 @@
 package net.ivanzykov.craftworkstasktracker;
 
-import org.modelmapper.ModelMapper;
+import net.ivanzykov.craftworkstasktracker.exceptions.TaskDateTimeParseException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -50,10 +52,14 @@ public class TaskController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     TaskDto updateSingle(@PathVariable Long id, @RequestBody TaskDto taskDto) {
-        Task task = mapToEntity(taskDto);
+        Task task;
+        try {
+            task = mapToEntity(taskDto);
+        } catch (DateTimeParseException ex) {
+            throw new TaskDateTimeParseException(ex.getMessage(), TaskDto.getDateTimeFormatter());
+        }
         Task taskUpdated = taskService.updateSingle(id, task);
-        return mapToDto(taskUpdated);
-    }
+        return mapToDto(taskUpdated);    }
 
     @DeleteMapping("{id}")
     void deleteSingle(@PathVariable Long id) {
