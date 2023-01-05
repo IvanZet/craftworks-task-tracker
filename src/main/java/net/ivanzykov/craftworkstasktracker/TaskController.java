@@ -46,10 +46,12 @@ public class TaskController {
         return mapToDto(taskCreated);
     }
 
-    // FIXME: use DTO for task arg
     @PutMapping("{id}")
-    Task updateSingle(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return taskService.updateSingle(id, updatedTask);
+    @ResponseStatus(HttpStatus.OK)
+    TaskDto updateSingle(@PathVariable Long id, @RequestBody TaskDto taskDto) {
+        Task task = mapToEntity(taskDto);
+        Task taskUpdated = taskService.updateSingle(id, task);
+        return mapToDto(taskUpdated);
     }
 
     @DeleteMapping("{id}")
