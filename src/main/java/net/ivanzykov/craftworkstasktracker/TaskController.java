@@ -2,6 +2,7 @@ package net.ivanzykov.craftworkstasktracker;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZoneId;
@@ -34,6 +35,7 @@ public class TaskController {
 
     // FIXME: use DTO for task arg
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     Task createSingle(@RequestBody final Task task) {
         // TODO: check that required fields passed, otherwise return a 400 bad payload
         return taskService.createSingle(task);
