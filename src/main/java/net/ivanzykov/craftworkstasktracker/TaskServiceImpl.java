@@ -1,5 +1,6 @@
 package net.ivanzykov.craftworkstasktracker;
 
+import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

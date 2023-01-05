@@ -1,8 +1,8 @@
-package net.ivanzykov.craftworkstasktracker;
+package net.ivanzykov.craftworkstasktracker.exceptions;
 
 public class TaskNotFoundException extends RuntimeException {
 
-    TaskNotFoundException(Long id) {
+    public TaskNotFoundException(Long id) {
         super("Could not find task with id " + id);
     }
 }

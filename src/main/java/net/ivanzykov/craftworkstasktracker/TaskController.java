@@ -1,6 +1,7 @@
 package net.ivanzykov.craftworkstasktracker;
 
 import org.modelmapper.ModelMapper;
+import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
