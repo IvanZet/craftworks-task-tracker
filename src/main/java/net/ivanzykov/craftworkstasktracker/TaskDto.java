@@ -2,6 +2,7 @@ package net.ivanzykov.craftworkstasktracker;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -99,6 +100,55 @@ public class TaskDto {
     }
 
     /**
+     * Parses field with date when the task was created and converts it to the supplied timezone.
+     *
+     * @param timezone  zoneId object of the client's timezone
+     * @return          converted date and time when the task was created
+     */
+    public OffsetDateTime getCreatedAtConverted(ZoneId timezone) {
+        return parseAndConvertDate(timezone, createdAt);
+    }
+
+    /**
+     * Parses field with date when the task was updated and converts it to the supplied timezone.
+     *
+     * @param timezone  zoneId object of the client's timezone
+     * @return          converted date and time when the task was updated
+     */
+    public OffsetDateTime getUpdatedAtConverted(ZoneId timezone) {
+        return parseAndConvertDate(timezone, updatedAt);
+    }
+
+    /**
+     * Parses field with date when the task is expected to be done and converts it to the supplied timezone.
+     *
+     * @param timezone  zoneId object of the client's timezone
+     * @return          converted date and time when the task is expected to be done
+     */
+    public OffsetDateTime getDueDateConverted(ZoneId timezone) {
+        return parseAndConvertDate(timezone, dueDate);
+    }
+
+    /**
+     * Parses field with date when the task was done and converts it to the supplied timezone.
+     *
+     * @param timezone  zoneId object of the client's timezone
+     * @return          converted date and time when the task was done
+     */
+    public OffsetDateTime getResolvedAtConverted(ZoneId timezone) {
+        return parseAndConvertDate(timezone, resolvedAt);
+    }
+
+    private OffsetDateTime parseAndConvertDate(ZoneId timezone, String date) {
+        if (date != null) {
+            return ZonedDateTime.parse(date, dateTimeFormatter)
+                    .withZoneSameInstant(timezone)
+                    .toOffsetDateTime();
+        }
+        return null;
+    }
+
+    /**
      * Converts all time-related fields to the time zone of the client.
      *
      * @param createdAt     offsetDateTime object when the task was created
@@ -163,6 +213,4 @@ public class TaskDto {
         return date.atZoneSameInstant(timezone)
                 .format(dateTimeFormatter);
     }
-
-    // TODO: add methods returning dates converted to DB's time zone
 }

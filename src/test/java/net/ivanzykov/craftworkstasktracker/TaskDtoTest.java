@@ -48,4 +48,52 @@ class TaskDtoTest {
                 () -> assertEquals("2023-01-08 18:00 CET", taskDto.getResolvedAt())
         );
     }
+
+    @Test
+    void getCreatedAtConverted() {
+        // Prepare SUT
+        taskDto.setCreatedAt(dateTimeOfClientString);
+
+        // Run this test
+        OffsetDateTime expected = OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
+                0, offsetInDbTimezone);
+
+        assertEquals(expected, taskDto.getCreatedAtConverted(timezoneOfDb));
+    }
+
+    @Test
+    void getUpdatedAtConverted() {
+        // Prepare SUT
+        taskDto.setUpdatedAt(dateTimeOfClientString);
+
+        // Run this test
+        OffsetDateTime expected = OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
+                0, offsetInDbTimezone);
+
+        assertEquals(expected, taskDto.getUpdatedAtConverted(timezoneOfDb));
+    }
+
+    @Test
+    void getDueDateConverted() {
+        // Prepare SUT
+        taskDto.setDueDate(dateTimeOfClientString);
+
+        // Run this test
+        OffsetDateTime expected = OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
+                0, offsetInDbTimezone);
+
+        assertEquals(expected, taskDto.getDueDateConverted(timezoneOfDb));
+    }
+
+    @Test
+    void getResolvedAtConverted() {
+        // Prepare SUT
+        taskDto.setResolvedAt(dateTimeOfClientString);
+
+        // Run this test
+        OffsetDateTime expected = OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
+                0, offsetInDbTimezone);
+
+        assertEquals(expected, taskDto.getResolvedAtConverted(timezoneOfDb));
+    }
 }
