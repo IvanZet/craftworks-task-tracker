@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.modelmapper.ModelMapper;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,8 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskDtoTest {
+
+    private final ModelMapper modelMapper = new ModelMapper();
 
     private TaskDto taskDto;
 
@@ -103,6 +106,54 @@ class TaskDtoTest {
                 Arguments.of(dateTimeOfClientString, OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
                         0, offsetInDbTimezone)),
                 Arguments.of(null, null)
+        );
+    }
+
+    @Test
+    void mapTaskEntityToTaskDto_allFieldsOfSameContent() {
+        // Prepare args
+        Task task = new Task();
+        task.setCreatedAt(OffsetDateTime.now());
+        task.setUpdatedAt(OffsetDateTime.now());
+        task.setDueDate(OffsetDateTime.now());
+        task.setResolvedAt(OffsetDateTime.now());
+        task.setTitle("Test title");
+        task.setDescription("Test description");
+        task.setPriority("md");
+        task.setStatus("work");
+
+        // Run this test
+        TaskDto taskDto = modelMapper.map(task, TaskDto.class);
+
+        assertAll(
+                () -> assertEquals(task.getCreatedAt().toString(), taskDto.getCreatedAt()),
+                () -> assertEquals(task.getUpdatedAt().toString(), taskDto.getUpdatedAt()),
+                () -> assertEquals(task.getDueDate().toString(), taskDto.getDueDate()),
+                () -> assertEquals(task.getResolvedAt().toString(), taskDto.getResolvedAt()),
+                () -> assertEquals(task.getTitle(), taskDto.getTitle()),
+                () -> assertEquals(task.getDescription(), taskDto.getDescription()),
+                () -> assertEquals(task.getPriority(), taskDto.getPriority()),
+                () -> assertEquals(task.getStatus(), taskDto.getStatus())
+        );
+    }
+
+    @Test
+    void mapTaskDtoToTaskEntity_nonDateFieldsOfSameContent() {
+        // Prepare args
+        TaskDto taskDto = new TaskDto();
+        taskDto.setTitle("Test title");
+        taskDto.setDescription("Test description");
+        taskDto.setPriority("lo");
+        taskDto.setPriority("wait");
+
+        // Run this test
+        Task task = modelMapper.map(taskDto, Task.class);
+
+        assertAll(
+                () -> assertEquals(taskDto.getTitle(), task.getTitle()),
+                () -> assertEquals(taskDto.getDescription(), task.getDescription()),
+                () -> assertEquals(taskDto.getPriority(), task.getPriority()),
+                () -> assertEquals(taskDto.getStatus(), task.getStatus())
         );
     }
 }
