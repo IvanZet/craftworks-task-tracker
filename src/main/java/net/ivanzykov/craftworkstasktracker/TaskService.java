@@ -11,7 +11,7 @@ interface TaskService {
 
     Task createSingle(Task task);
 
-    Task updateSingle(Long id, Task updatedTask);
+    Task updateSingle(Task oldTask, Task updatedTask);
 
     void delete(Task task);
 }

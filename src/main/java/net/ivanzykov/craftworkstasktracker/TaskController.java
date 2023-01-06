@@ -63,13 +63,15 @@ public class TaskController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     TaskDto updateSingle(@PathVariable Long id, @RequestBody TaskDto taskDto) {
-        Task task;
+        Task newTask;
         try {
-            task = mapToEntity(taskDto);
+            newTask = mapToEntity(taskDto);
         } catch (DateTimeParseException ex) {
             throw new TaskDateTimeParseException(ex.getMessage(), TaskDto.getDateTimeFormatter());
         }
-        Task taskUpdated = taskService.updateSingle(id, task);
+        Task oldTask = taskService.fetchSingle(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+        Task taskUpdated = taskService.updateSingle(oldTask, newTask);
         return mapToDto(taskUpdated);    }
 
     @DeleteMapping("{id}")

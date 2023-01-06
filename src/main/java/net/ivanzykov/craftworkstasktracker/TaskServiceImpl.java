@@ -1,6 +1,5 @@
 package net.ivanzykov.craftworkstasktracker;
 
-import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +32,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateSingle(Long id, Task updatedTask) {
-        Task oldTask = fetchSingle(id)
-                .orElseThrow(() -> new TaskNotFoundException(id));
-
+    public Task updateSingle(Task oldTask, Task updatedTask) {
         oldTask.setUpdatedAt(updatedTask.getUpdatedAt());
         if (updatedTask.getDueDate() != null) {
             oldTask.setDueDate(updatedTask.getDueDate());
@@ -52,7 +48,6 @@ public class TaskServiceImpl implements TaskService {
         if (updatedTask.getStatus() != null) {
             oldTask.setPriority(updatedTask.getPriority());
         }
-
         return saveAndFlush(oldTask);
     }
 
