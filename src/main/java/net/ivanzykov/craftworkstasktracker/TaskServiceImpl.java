@@ -34,8 +34,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateSingle(Long id, Task updatedTask) {
-        // TODO: rework updating fields via DTO
-        // TODO: Add validation that all attributes are passed in, otherwise return a 400 bad payload
         Task oldTask = fetchSingle(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
 
