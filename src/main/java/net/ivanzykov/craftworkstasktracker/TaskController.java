@@ -83,6 +83,7 @@ public class TaskController {
 
     private TaskDto mapToDto(Task task) {
         TaskDto taskDto = modelMapper.map(task, TaskDto.class);
+        // TODO: move getting individual fields to DTO (pass whole entity)?
         taskDto.setAllDatesConverted(
                 task.getCreatedAt(),
                 task.getUpdatedAt(),
@@ -96,6 +97,7 @@ public class TaskController {
     private Task mapToEntity(TaskDto taskDto) {
         Task task = modelMapper.map(taskDto, Task.class);
         ZoneId zoneIdOfDb = ZoneId.of(timezoneOfDb);
+        // TODO: move setting individual fields to entity or even DTO?
         task.setCreatedAt(taskDto.getCreatedAtConverted(zoneIdOfDb));
         task.setUpdatedAt(taskDto.getUpdatedAtConverted(zoneIdOfDb));
         task.setDueDate(taskDto.getDueDateConverted(zoneIdOfDb));
