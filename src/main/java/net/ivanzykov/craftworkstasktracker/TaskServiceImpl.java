@@ -1,6 +1,7 @@
 package net.ivanzykov.craftworkstasktracker;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> fetchAll() {
-        return taskRepository.findAll();
+        Sort sorting = Sort.by("id").ascending();
+        return taskRepository.findAll(sorting);
     }
 
     @Override
