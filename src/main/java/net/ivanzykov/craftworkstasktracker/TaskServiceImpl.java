@@ -57,8 +57,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteSingle(Long id) {
-        taskRepository.deleteById(id);
+    public void delete(Task task) {
+        taskRepository.delete(task);
     }
 
     private Task saveAndFlush(Task task) {

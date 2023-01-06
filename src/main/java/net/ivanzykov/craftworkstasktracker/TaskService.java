@@ -13,5 +13,5 @@ interface TaskService {
 
     Task updateSingle(Long id, Task updatedTask);
 
-    void deleteSingle(Long id);
+    void delete(Task task);
 }

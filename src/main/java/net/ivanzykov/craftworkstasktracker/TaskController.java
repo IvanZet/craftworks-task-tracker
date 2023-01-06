@@ -74,8 +74,9 @@ public class TaskController {
 
     @DeleteMapping("{id}")
     void deleteSingle(@PathVariable Long id) {
-        // TODO: handle when task not found
-        taskService.deleteSingle(id);
+        Task task = taskService.fetchSingle(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+        taskService.delete(task);
     }
 
     private TaskDto mapToDto(Task task) {
