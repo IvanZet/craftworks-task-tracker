@@ -1,6 +1,7 @@
 package net.ivanzykov.craftworkstasktracker;
 
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskDateTimeParseException;
+import net.ivanzykov.craftworkstasktracker.exceptions.TaskFieldsMissingException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -43,14 +45,18 @@ public class TaskController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     TaskDto createSingle(@RequestBody final TaskDto taskDto) {
-        // TODO: check that required fields passed, otherwise return a 400 bad payload
         Task task;
         try {
             task = mapToEntity(taskDto);
         } catch (DateTimeParseException ex) {
             throw new TaskDateTimeParseException(ex.getMessage(), TaskDto.getDateTimeFormatter());
         }
-        Task taskCreated = taskService.createSingle(task);
+        Task taskCreated;
+        try {
+            taskCreated = taskService.createSingle(task);
+        } catch (ConstraintViolationException ex) {
+            throw new TaskFieldsMissingException(ex.getMessage());
+        }
         return mapToDto(taskCreated);
     }
 
