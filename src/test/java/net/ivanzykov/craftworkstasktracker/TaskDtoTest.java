@@ -30,7 +30,7 @@ class TaskDtoTest {
     }
 
     @Test
-    void setAllDatesConverted() {
+    void convertAndSetAllDatesInDto_datesConvertedCorrectly() {
         // Prepare args
         OffsetDateTime createdAt = OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
                 0, offsetInDbTimezone);
@@ -54,7 +54,7 @@ class TaskDtoTest {
     }
 
     @Test
-    void getCreatedAtConverted() {
+    void getCreatedAtConvertedFromDto_conversionOk() {
         // Prepare SUT
         taskDto.setCreatedAt(dateTimeOfClientString);
 
@@ -66,7 +66,7 @@ class TaskDtoTest {
     }
 
     @Test
-    void getUpdatedAtConverted() {
+    void getUpdatedAtConvertedFromDto_conversionOk() {
         // Prepare SUT
         taskDto.setUpdatedAt(dateTimeOfClientString);
 
@@ -78,7 +78,7 @@ class TaskDtoTest {
     }
 
     @Test
-    void getDueDateConverted() {
+    void getDueDateConvertedFromDto_conversionOk() {
         // Prepare SUT
         taskDto.setDueDate(dateTimeOfClientString);
 
@@ -91,7 +91,7 @@ class TaskDtoTest {
 
     @ParameterizedTest
     @MethodSource("provideGetResolvedAtConverted")
-    void getResolvedAtConverted(String dateTime, OffsetDateTime expected) {
+    void getResolvedAtConvertedFromDto_conversionOk(String dateTime, OffsetDateTime expected) {
         // Prepare SUT
         taskDto.setResolvedAt(dateTime);
 
