@@ -14,4 +14,6 @@ interface TaskService {
     Task updateSingle(Task oldTask, Task updatedTask);
 
     void delete(Task task);
+
+    void deleteAll();
 }

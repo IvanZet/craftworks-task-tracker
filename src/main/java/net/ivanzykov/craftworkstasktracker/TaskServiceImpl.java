@@ -61,4 +61,9 @@ public class TaskServiceImpl implements TaskService {
     private Task saveAndFlush(Task task) {
         return taskRepository.saveAndFlush(task);
     }
+
+    @Override
+    public void deleteAll() {
+        taskRepository.deleteAll();
+    }
 }

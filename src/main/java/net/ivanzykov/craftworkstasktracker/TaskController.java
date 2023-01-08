@@ -81,6 +81,11 @@ public class TaskController {
         taskService.delete(task);
     }
 
+    @DeleteMapping
+    void deleteAll() {
+        taskService.deleteAll();
+    }
+
     private TaskDto mapToDto(Task task) {
         TaskDto taskDto = modelMapper.map(task, TaskDto.class);
         // TODO: move getting individual fields to DTO (pass whole entity)?
