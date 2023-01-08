@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  app:
+    image: 'ivanzet/craftworks-task-tracker:latest'
+    build:
+      context: .
+    container_name: app
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=sample
+      - SPRING_DATASOURCE_PASSWORD=sample
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    image: postgres:15.1
+    container_name: db
+    volumes:
+      - sample_db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=sample
+      - POSTGRES_USER=sample
+      - PGDATA=/var/lib/postgresql/data/pgdata
+volumes:
+  sample_db: {}

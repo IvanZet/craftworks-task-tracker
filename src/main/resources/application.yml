@@ -1,13 +1,8 @@
 spring:
-  datasource:
-    # FIXME: hide credentials
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: sample
-    password: sample
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
-      dll-auto: none
+      dll-auto: update
       show-sql: true
     properties:
       hibernate:
