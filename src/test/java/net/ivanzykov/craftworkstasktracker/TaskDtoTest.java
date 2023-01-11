@@ -35,18 +35,23 @@ class TaskDtoTest {
     @Test
     void convertAndSetAllDatesInDto_datesConvertedCorrectly() {
         // Prepare args
+        Task task = new Task();
         OffsetDateTime createdAt = OffsetDateTime.of(2023, 1, 4, 15, 0, 0,
                 0, offsetInDbTimezone);
+        task.setCreatedAt(createdAt);
         OffsetDateTime updatedAt = OffsetDateTime.of(2023, 1, 4, 20, 0, 0,
                 0, offsetInDbTimezone);
+        task.setUpdatedAt(updatedAt);
         OffsetDateTime dueDate = OffsetDateTime.of(2023, 1, 31, 23, 0, 0,
                 0, offsetInDbTimezone);
+        task.setDueDate(dueDate);
         OffsetDateTime resolvedAt = OffsetDateTime.of(2023, 1, 8, 17, 0, 0,
                 0, offsetInDbTimezone);
+        task.setResolvedAt(resolvedAt);
 
         // Run this test
         ZoneId timezoneOfClient = ZoneId.of("CET");
-        taskDto.setAllDatesConverted(createdAt, updatedAt, dueDate, resolvedAt, timezoneOfClient);
+        taskDto.setAllDatesConverted(task, timezoneOfClient);
 
         assertAll(
                 () -> assertEquals("2023-01-04 16:00 CET", taskDto.getCreatedAt()),

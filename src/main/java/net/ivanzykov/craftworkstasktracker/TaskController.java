@@ -88,14 +88,8 @@ public class TaskController {
 
     private TaskDto mapToDto(Task task) {
         TaskDto taskDto = modelMapper.map(task, TaskDto.class);
-        // TODO: move getting individual fields to DTO (pass whole entity)?
-        taskDto.setAllDatesConverted(
-                task.getCreatedAt(),
-                task.getUpdatedAt(),
-                task.getDueDate(),
-                task.getResolvedAt(),
-                // TODO: try getting time zone from the request
-                ZoneId.of("CET"));
+        // TODO: try getting time zone from the request
+        taskDto.setAllDatesConverted(task, ZoneId.of("CET"));
         return taskDto;
     }
 

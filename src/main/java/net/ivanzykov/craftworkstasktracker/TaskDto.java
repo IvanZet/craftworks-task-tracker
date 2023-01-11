@@ -155,19 +155,15 @@ public class TaskDto {
     /**
      * Converts all time-related fields to the time zone of the client.
      *
-     * @param createdAt     offsetDateTime object when the task was created
-     * @param updatedAt     offsetDateTime object when the task was last updated
-     * @param dueDate       offsetDateTime object when the task is expected to be done
-     * @param resolvedAt    offsetDateTime object when the task was done
-     * @param timezone      zoneId object of the client's timezone
+     * @param task      task object of the corresponding task
+     * @param timezone  zoneId object of the client's timezone
      */
-    public void setAllDatesConverted(OffsetDateTime createdAt, OffsetDateTime updatedAt, OffsetDateTime dueDate,
-                                     OffsetDateTime resolvedAt, ZoneId timezone) {
+    public void setAllDatesConverted(Task task, ZoneId timezone) {
         this.timezone = timezone;
-        setCreatedAtConverted(createdAt);
-        setUpdatedAtConverted(updatedAt);
-        setDueDateConverted(dueDate);
-        setResolvedAtConverted(resolvedAt);
+        setCreatedAtConverted(task.getCreatedAt());
+        setUpdatedAtConverted(task.getUpdatedAt());
+        setDueDateConverted(task.getDueDate());
+        setResolvedAtConverted(task.getResolvedAt());
     }
 
     /**
