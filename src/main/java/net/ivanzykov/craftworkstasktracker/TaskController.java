@@ -4,7 +4,6 @@ import net.ivanzykov.craftworkstasktracker.exceptions.TaskDateTimeParseException
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskFieldsMissingException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +17,22 @@ import java.util.List;
 @RequestMapping("/api/v1/tasks")
 public class TaskController {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private TaskService taskService;
+    private final ModelMapper modelMapper;
+    private final TaskService taskService;
 
     @Value("${spring.jpa.properties.hibernate.jdbc.time_zone}")
     private String timezoneOfDb;
+
+    /**
+     * Constructor with all dependencies of this class.
+     *
+     * @param modelMapper   modelMapper object which maps entities to DTO and back
+     * @param taskService   taskService object which handles data persistence
+     */
+    public TaskController(ModelMapper modelMapper, TaskService taskService) {
+        this.modelMapper = modelMapper;
+        this.taskService = taskService;
+    }
 
     @GetMapping
     List<TaskDto> fetchAll() {
