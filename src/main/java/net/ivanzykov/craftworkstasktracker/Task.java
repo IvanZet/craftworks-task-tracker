@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 /**
  * Entity of a task.
@@ -140,5 +141,12 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setAllDatesFromDtoConvertedToTimezone(TaskDto taskDto, ZoneId timezone) {
+        createdAt = taskDto.getCreatedAtConverted(timezone);
+        updatedAt = taskDto.getUpdatedAtConverted(timezone);
+        dueDate = taskDto.getDueDateConverted(timezone);
+        resolvedAt = taskDto.getResolvedAtConverted(timezone);
     }
 }
