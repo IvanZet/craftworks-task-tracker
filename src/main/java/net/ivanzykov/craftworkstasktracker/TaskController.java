@@ -2,6 +2,7 @@ package net.ivanzykov.craftworkstasktracker;
 
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskDateTimeParseException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskFieldsMissingException;
+import net.ivanzykov.craftworkstasktracker.exceptions.TaskIdSetException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,6 +53,9 @@ public class TaskController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     TaskDto createSingle(@RequestBody final TaskDto taskDto) {
+        if (taskDto.getId() != null) {
+            throw new TaskIdSetException();
+        }
         Task task;
         try {
             task = mapToEntity(taskDto);
@@ -79,7 +83,8 @@ public class TaskController {
             throw new TaskDateTimeParseException(ex.getMessage(), TaskDto.getDateTimeFormatter());
         }
         Task taskUpdated = taskService.updateSingle(oldTask, newTask);
-        return mapToDto(taskUpdated);    }
+        return mapToDto(taskUpdated);
+    }
 
     @DeleteMapping("{id}")
     void deleteSingle(@PathVariable Long id) {
