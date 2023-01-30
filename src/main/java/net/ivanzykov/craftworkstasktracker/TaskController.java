@@ -7,6 +7,7 @@ import net.ivanzykov.craftworkstasktracker.exceptions.TaskNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
@@ -52,6 +53,7 @@ public class TaskController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     TaskDto createSingle(@RequestBody final TaskDto taskDto) {
         if (taskDto.getId() != null) {
             throw new TaskIdSetException();
@@ -73,6 +75,7 @@ public class TaskController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Transactional
     TaskDto updateSingle(@PathVariable Long id, @RequestBody TaskDto taskDto) {
         Task oldTask = taskService.fetchSingle(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
