@@ -1,9 +1,11 @@
-package net.ivanzykov.craftworkstasktracker;
+package net.ivanzykov.craftworkstasktracker.controllers;
+
+import net.ivanzykov.craftworkstasktracker.Task;
 
 import java.util.List;
 import java.util.Optional;
 
-interface TaskService {
+public interface TaskService {
 
     List<Task> fetchAll();
 

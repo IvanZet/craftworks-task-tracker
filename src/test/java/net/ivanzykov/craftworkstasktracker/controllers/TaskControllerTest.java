@@ -1,4 +1,4 @@
-package net.ivanzykov.craftworkstasktracker;
+package net.ivanzykov.craftworkstasktracker.controllers;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.ivanzykov.craftworkstasktracker.Task;
+import net.ivanzykov.craftworkstasktracker.TaskDto;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +37,6 @@ class TaskControllerTest {
             return new ModelMapper();
         }
     }
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @MockBean
     private TaskService taskService;

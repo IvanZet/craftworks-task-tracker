@@ -44,32 +44,6 @@ public class Task {
     @NotNull
     private String status;
 
-    protected Task() {}
-
-    /**
-     * Public constructor for a Task entity with all fields as arguments.
-     *
-     * @param createdAt     date with a datestamp when object of this entity was created
-     * @param updatedAt     date with a datestamp when object of this entity was last updated
-     * @param dueDate       date with a date of the deadline date for this task
-     * @param resolvedAt    date with a date when this task was finished
-     * @param title         string with the title
-     * @param description   string with description
-     * @param priority      string with a four-character priority code (e.g. wait/work/done)
-     * @param status        string with a two-character status code (e.g. hi/md/lo)
-     */
-    public Task(OffsetDateTime createdAt, OffsetDateTime updatedAt, OffsetDateTime dueDate, OffsetDateTime resolvedAt,
-                String title, String description, String priority, String status) {
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.dueDate = dueDate;
-        this.resolvedAt = resolvedAt;
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
-        this.status = status;
-    }
-
     public Long getId() {
         return id;
     }

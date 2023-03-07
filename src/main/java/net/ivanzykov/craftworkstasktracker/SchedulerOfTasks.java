@@ -1,5 +1,6 @@
 package net.ivanzykov.craftworkstasktracker;
 
+import net.ivanzykov.craftworkstasktracker.controllers.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

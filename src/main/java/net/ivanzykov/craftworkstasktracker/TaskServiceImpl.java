@@ -1,5 +1,6 @@
 package net.ivanzykov.craftworkstasktracker;
 
+import net.ivanzykov.craftworkstasktracker.controllers.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

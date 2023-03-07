@@ -1,5 +1,7 @@
-package net.ivanzykov.craftworkstasktracker;
+package net.ivanzykov.craftworkstasktracker.controllers;
 
+import net.ivanzykov.craftworkstasktracker.Task;
+import net.ivanzykov.craftworkstasktracker.TaskDto;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskDateTimeParseException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskFieldsMissingException;
 import net.ivanzykov.craftworkstasktracker.exceptions.TaskIdSetException;
@@ -54,7 +56,7 @@ public class TaskController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    TaskDto createSingle(@RequestBody final TaskDto taskDto) {
+    public TaskDto createSingle(@RequestBody final TaskDto taskDto) {
         if (taskDto.getId() != null) {
             throw new TaskIdSetException();
         }
@@ -76,7 +78,7 @@ public class TaskController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    TaskDto updateSingle(@PathVariable Long id, @RequestBody TaskDto taskDto) {
+    public TaskDto updateSingle(@PathVariable Long id, @RequestBody TaskDto taskDto) {
         Task oldTask = taskService.fetchSingle(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
         Task newTask;
